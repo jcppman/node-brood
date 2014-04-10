@@ -11,4 +11,3 @@ With brood you could:
 ## Manage your spawn
 
 ## Response event
-
