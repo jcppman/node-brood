@@ -12,6 +12,8 @@ function Brood (params) {
   var blueprint;
   var blueprintPath;
   var species;
+  var timeout;
+  var interval;
 
   if (typeof params === 'undefined') {
 
@@ -45,7 +47,14 @@ function Brood (params) {
   timeout = blueprint.timeout;
   if (typeof timeout === 'undefined') {
 
-    timeout = 5000;
+    timeout = 60000;
+  
+  }
+
+  interval = blueprint.lifeDetectInterval;
+  if (typeof interval === 'undefined') {
+
+    interval = 5000;
   
   }
 
@@ -56,6 +65,7 @@ function Brood (params) {
 
   that.timeout = timeout;
   that.rootPath = rootPath;
+  that.lifeDetectInterval = interval;
   that.library = {};
 
   underscore.each(species, function (value, idx) {
@@ -66,7 +76,7 @@ function Brood (params) {
 
 };
 
-Brood.prototype.breed = function (larvaType, args) {
+Brood.prototype.breed = function BroodBreed (larvaType, args) {
 
   /*
    * Return a larva that belongs to a specific type
@@ -92,11 +102,56 @@ Brood.prototype.breed = function (larvaType, args) {
 
   larva = new Larva(species);
   larva.spawn(args);
+  larva.on('exit', function () {
+
+    var timer = larva.timer;
+    if (typeof timer !== 'undefined') {
+
+      clearTimeout(timer);
+    
+    }
+  
+  });
+  that.watch(larva);
   return larva;
 
 };
 
-Brood.prototype.importType = function (species) {
+Brood.prototype.watch = function BroodWatch (larva) {
+
+  /*
+   * Keep watching the larva, if lastHeartBeat + timeout < now, kill it
+   * @param larava: the larva
+   */
+
+  var that = this;
+  var heartBeat = larva.lastHeartBeat;
+  var expiryTime = heartBeat + that.timeout;
+  var date = new Date();
+  var now = date.getTime();
+  var interval = that.lifeDetectInterval;
+
+  if (expiryTime < now) {
+
+    larva.emit('error', new VError('Larva no response'));
+    larva.die();
+
+  } else {
+
+    console.log('Healthy!');
+    var timer = setTimeout(function () {
+
+      that.watch(larva);
+    
+    }, interval);
+
+    larva.timer = timer;
+  
+  }
+
+};
+
+Brood.prototype.importType = function BroodImportType (species) {
 
   /*
    * Import the type into library, the object with same

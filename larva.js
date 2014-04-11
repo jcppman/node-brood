@@ -25,12 +25,19 @@ function Larva(config) {
   that.env = underscore.extend(process.env, env);
   that.args = args;
   that.childProcess = null;
+  that.lastHeartBeat = new Date().getTime();
 
 }
 
 util.inherits(Larva, EventEmitter);
 
 Larva.prototype.spawn = function larvaSpawn (addArgs) {
+  /*
+   * Spawn a child_process, attach a live detector on it and carry the stdout
+   * event to larva
+   * @param addArgs: an array or a string. the additional args that you want 
+   * it to be appended when the child process get spawned
+   */
 
   var that = this;
   var env = that.env;
@@ -40,6 +47,10 @@ Larva.prototype.spawn = function larvaSpawn (addArgs) {
   if (underscore.isArray(addArgs)) {
 
     args = args.concat(addArgs);
+  
+  } else if (typeof addArgs === 'string') {
+
+    args.push(addArgs);
   
   }
   
@@ -59,9 +70,16 @@ Larva.prototype.spawn = function larvaSpawn (addArgs) {
         env: env 
       });
 
-      // Let's plug a life detector to check if the larva is alive
+      // Plug a life detector to check if the larva is alive
       child.stdout.on('data', function (msg) {
 
+        that.lastHeartBeat = new Date().getTime();
+      
+      });
+
+      child.on('exit', function () {
+
+        that.emit('exit', arguments);
       
       });
 
@@ -94,10 +112,28 @@ Larva.prototype.spawn = function larvaSpawn (addArgs) {
         that.emit('error', line);
       
       });
+
+      that.childProcess = child;
     
     });
   
   }
+
+  return that;
+
+};
+
+Larva.prototype.die = function larvaDie () {
+  /*
+   * Rest In Peace
+   */
+
+  var that = this;
+  var child = that.childProcess;
+
+  child.kill('SIGKILL');
+
+  return that;
 
 };
 
