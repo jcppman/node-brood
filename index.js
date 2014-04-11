@@ -126,7 +126,8 @@ Brood.prototype.watch = function BroodWatch (larva) {
 
   var that = this;
   var heartBeat = larva.lastHeartBeat;
-  var expiryTime = heartBeat + that.timeout;
+  var timeout = larva.timeout;
+  var expiryTime = heartBeat + timeout;
   var date = new Date();
   var now = date.getTime();
   var interval = that.lifeDetectInterval;
@@ -138,7 +139,6 @@ Brood.prototype.watch = function BroodWatch (larva) {
 
   } else {
 
-    console.log('Healthy!');
     var timer = setTimeout(function () {
 
       that.watch(larva);
@@ -213,7 +213,7 @@ Brood.prototype.importType = function BroodImportType (species) {
   
   } else {
 
-    scriptPath = path.resolve(scriptPath);
+    scriptPath = path.resolve(that.rootPath, scriptPath);
   
   }
 
@@ -252,4 +252,4 @@ Brood.prototype.importType = function BroodImportType (species) {
 
 };
 
-module.exports = Brood;
+exports.Brood = Brood;
