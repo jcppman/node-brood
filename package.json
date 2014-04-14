@@ -10,7 +10,7 @@
   "keywords": ["child_process", "spawn", "exec", "fork"],
   "homepage": "http://github.com/jcppman/brood",
   "bugs": {
-    "url": "http://github.com/jcppman/brood/issues"
+    "url": "http://github.com/jcppman/node-brood/issues"
   },
   "license": "MIT",
   "author": {
@@ -21,7 +21,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "http://github.com/jcppman/brood.git"
+    "url": "http://github.com/jcppman/node-brood.git"
   },
   "dependencies": {
     "carrier": ">=0.1.13",
