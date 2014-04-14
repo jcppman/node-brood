@@ -96,23 +96,27 @@ Brood.prototype.breed = function BroodBreed (larvaType, args) {
     var errMsg = util.format(
       'BROOD_BREED * type -> %s * err -> TYPE_NOT_FOUND',
       larvaType);
-    return new Error(errMsg);
+    throw new Error(errMsg);
   
   }
 
   larva = new Larva(species);
-  larva.spawn(args);
-  larva.on('exit', function () {
+  process.nextTick(function () {
 
-    var timer = larva.timer;
-    if (typeof timer !== 'undefined') {
+    larva.spawn(args);
+    larva.on('exit', function () {
 
-      clearTimeout(timer);
+      var timer = larva.timer;
+      if (typeof timer !== 'undefined') {
+
+        clearTimeout(timer);
+      
+      }
     
-    }
-  
+    });
+    that.watch(larva);
+
   });
-  that.watch(larva);
   return larva;
 
 };

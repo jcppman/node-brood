@@ -1,6 +1,6 @@
 {
   "name": "brood",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "private": false,
   "engines": {
     "node": "*",
@@ -8,7 +8,7 @@
   },
   "description": "A container for spawn, provides the ability to manage and communicate with spawned child_processes",
   "keywords": ["child_process", "spawn", "exec", "fork"],
-  "homepage": "http://github.com/jcppman/brood",
+  "homepage": "http://github.com/jcppman/node-brood",
   "bugs": {
     "url": "http://github.com/jcppman/node-brood/issues"
   },
