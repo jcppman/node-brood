@@ -18,8 +18,18 @@ function Larva(config) {
   var that = this;
   var command = config.command;
   var env = config.env || {};
-  var args = config.args || "";
+  var args = config.args;
 
+  if (typeof args === 'string') {
+  
+    args = [args];
+
+  } else if (typeof args === 'undefined') {
+
+    args = [];
+  
+  }
+  
   Larva.super_.call(this);
   that.command = command;
   that.env = underscore.extend(process.env, env);

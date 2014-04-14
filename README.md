@@ -43,7 +43,6 @@ larva.on('story', function (msg) {
 Brood is the catalog of species, brood will build the library with given 
 ``blueprint.json``.
 
-### TODO
 Brood constructor:
 ```
   // Available options
@@ -52,6 +51,9 @@ Brood constructor:
   };
   var brood = new Brood(options);
 ```
+
+__rootPath could be absolute path or relative path, actually we directly use
+``path.resolve(rootPath)`` to deal with it.__
 
 ``Brood.breed(speciesName)`` will return a __Larva__ that contains a ``child_process``
 that spawned with predefined configuration.
@@ -82,12 +84,20 @@ The example below contains every available field:
 {
   "command": "phantomjs", // The command for executing the script
   "name": "yourHouse.myGhost", // The identity of the species
-  "scriptPath": "", // Optional, 
-  "extension": "",
-  "args": [],
-  "env": {},
+  "scriptPath": "", // Optional 
+  "extension": "", // Optional, Default: js
+  "args": [], // Optional
+  "env": {}, // Optional
 }
 ```
+
+- ``scriptPath``: the relative path to the rootPath, if not given, brood will 
+calculate it from name and __replace "." with "/"__. If the name is "yourHouse.myGhost",
+the default scriptPath will be "yourHouse/myGhost".
+- ``extension``: the extension of your script, default is 'js'
+- ``args``: An array or a string
+- ``env``: An object, it will be merged with ``process.env`` and passed into spawned
+child.
 
 ## Timeout
 When a larva receive a message from stdout, it will update the latestHeartBeat,
