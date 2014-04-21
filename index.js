@@ -196,7 +196,7 @@ Brood.prototype.importType = function BroodImportType (species) {
 
   if (typeof command === 'undefined') {
 
-    throw new VError('Species command missing: %s', JSON.stringify(species));
+    command = 'node'
   
   }
 
