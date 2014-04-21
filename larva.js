@@ -111,7 +111,15 @@ Larva.prototype.spawn = function larvaSpawn (addArgs) {
         
         } catch (err) {
 
-          that.emit('info', line);
+          if (err instanceof SyntaxError) {
+
+            that.emit('info', line);
+
+          } else {
+
+            that.emit('error', err);
+
+          }
         
         }
       
