@@ -55,8 +55,9 @@ Brood constructor:
 __rootPath could be absolute path or relative path, actually we directly use
 ``path.resolve(rootPath)`` to deal with it.__
 
-``Brood.breed(speciesName)`` will return a __Larva__ that contains a ``child_process``
-that spawned with predefined configuration.
+``Brood.breed(speciesName, [args])`` will return a __Larva__ that contains a 
+``child_process`` that spawned with predefined configuration, and append the
+additional args on it. ``args`` could be string or array of strings.
 
 When a larva is created by Brood, brood will keep watching it and kill it if 
 it is regarded as "no-response".
