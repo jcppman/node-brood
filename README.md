@@ -82,7 +82,7 @@ name, while building the library, the species with the same name will be overrid
 The example below contains every available field:
 ```
 {
-  "command": "phantomjs", // The command for executing the script
+  "command": "phantomjs", // The command for executing the script, Default: node
   "name": "yourHouse.myGhost", // The identity of the species
   "scriptPath": "", // Optional 
   "extension": "", // Optional, Default: js
