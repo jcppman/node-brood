@@ -117,7 +117,7 @@ Larva.prototype.spawn = function larvaSpawn (addArgs) {
 
           } else {
 
-            that.emit('error', err);
+            throw err;
 
           }
         
