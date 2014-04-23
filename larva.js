@@ -10,26 +10,22 @@ function Larva(config) {
    * This constructor accept a config to construct larva
    * @param config: {
    *   "command": "the command",
-   *   "env": "explictic enviroments",
+   *   "env": "additional enviroments",
    *   "args": "args"
    * }
    */
 
   var that = this;
-  var command = config.command;
+  var command = config.command || 'node';
   var env = config.env || {};
-  var args = config.args;
+  var args = config.args || [];
 
   if (typeof args === 'string') {
   
     args = [args];
 
-  } else if (typeof args === 'undefined') {
+  }  
 
-    args = [];
-  
-  }
-  
   Larva.super_.call(this);
   that.command = command;
   that.env = underscore.extend(process.env, env);

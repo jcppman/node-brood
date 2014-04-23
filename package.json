@@ -24,8 +24,12 @@
     "url": "http://github.com/jcppman/node-brood.git"
   },
   "dependencies": {
-    "carrier": ">=0.1.13",
-    "underscore": ">=1.6.0",
-    "verror": ">=1.4.0"
+    "carrier": "~0.1.13",
+    "underscore": "~1.6.0",
+    "verror": "~1.4.0"
+  },
+  "devDependencies": {
+    "mocha": "1.18.2",
+    "should": "3.3.1"
   }
 }
