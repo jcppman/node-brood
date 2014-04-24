@@ -1,0 +1,15 @@
+{
+  "timeout": 1000,
+  "lifeDetectInterval": 1000,
+  "species": [
+    {
+      "name": "foobar"
+    },
+    {
+      "name": "echoBoy"
+    },
+    {
+      "name": "sayYourPrayer" 
+    }
+  ]
+}
