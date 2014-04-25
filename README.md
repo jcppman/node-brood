@@ -196,3 +196,21 @@ than the blueprint.json should looks like:
   ]  
 }
 ```
+
+## utils
+For convience, brood provides a set of tool to do the common jobs. If you put
+your rootPath inside the nodejs project and your spawned script is a nodejs 
+script, you could use ``var utils = require('brood').utils`` to get those utils.
+
+Right now it only has one function: ``utils.report``:
+```
+var utils = require('brood').utils;
+
+utils.report('customEvent', 'hi there! this is a msg for ya');
+// output is a stringified JSON: 
+//    '{"event":"customEvent","data":"hi there! this is a msg for ya"}'
+
+```
+
+This funcftion is made for sending msg back to father process and trigger a
+custom event
