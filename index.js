@@ -257,3 +257,11 @@ Brood.prototype.importType = function BroodImportType (species) {
 };
 
 exports.Brood = Brood;
+exports.utils = {
+  report: function (event, msg) {
+    console.log(JSON.stringify({
+      event: event,
+      data: msg 
+    }));
+  }
+};
