@@ -19,6 +19,7 @@ function Larva(config) {
   var command = config.command || 'node';
   var env = config.env || {};
   var args = config.args || [];
+  var timeout = config.timeout;
 
   if (typeof args === 'string') {
   
@@ -31,6 +32,8 @@ function Larva(config) {
   that.env = underscore.extend(process.env, env);
   that.args = args;
   that.childProcess = null;
+  that.status = 'initialized';
+  that.timeout = timeout;
   that.lastHeartBeat = new Date().getTime();
 
 }
@@ -76,6 +79,8 @@ Larva.prototype.spawn = function larvaSpawn (addArgs) {
         env: env 
       });
 
+      that.status = 'spawned';
+
       // Plug a life detector to check if the larva is alive
       child.stdout.on('data', function (msg) {
 
@@ -83,7 +88,17 @@ Larva.prototype.spawn = function larvaSpawn (addArgs) {
       
       });
 
-      child.on('exit', function () {
+      child.on('exit', function (code, signal) {
+
+        if (code === 0) {
+
+          that.status = 'done';
+        
+        } else {
+
+          that.status = 'killed';
+        
+        }
 
         that.emit('exit', arguments);
       
@@ -145,7 +160,9 @@ Larva.prototype.die = function larvaDie () {
   var that = this;
   var child = that.childProcess;
 
-  child.kill('SIGKILL');
+  process.nextTick(function () {
+    child.kill('SIGKILL');
+  });
 
   return that;
 

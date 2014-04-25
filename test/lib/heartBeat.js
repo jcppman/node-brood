@@ -1,8 +1,13 @@
+var count = 0;
+
 function heartbeat () {
 
   console.log('bump');
+  count++;
 
-  setTimeout(heartbeat, 100);
+  if (count < 100) {
+    setTimeout(heartbeat, 100); 
+  }
 
 }
 

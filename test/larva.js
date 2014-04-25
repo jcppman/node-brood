@@ -259,7 +259,7 @@ describe('Larva', function () {
         lastHeartBeat.should.not.eql(firstBeat);
         done();
       
-      }, 200);
+      }, 500);
 
     });
 

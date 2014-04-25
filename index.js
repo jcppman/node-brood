@@ -44,17 +44,17 @@ function Brood (params) {
   
   }
 
-  timeout = blueprint.timeout;
+  timeout = params.timeout;
   if (typeof timeout === 'undefined') {
 
-    timeout = 60000;
+    timeout = blueprint.timeout || 60000;
   
   }
 
-  interval = blueprint.lifeDetectInterval;
+  interval = params.lifeDetectInterval;
   if (typeof interval === 'undefined') {
 
-    interval = 5000;
+    interval = blueprint.lifeDetectInterval || 5000;
   
   }
 
