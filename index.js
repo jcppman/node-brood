@@ -167,6 +167,7 @@ Brood.prototype.importType = function BroodImportType (species) {
    * The scheme is: 
    * {
    *   name: "killer.theRipper"
+   *   inheritFrom: "killer.zodiac",
    *   scriptPath: "killer/theRipper.js",
    *   command: "casperjs",
    *   timeout: 10000,
@@ -180,13 +181,15 @@ Brood.prototype.importType = function BroodImportType (species) {
 
   var that = this;
   var library = that.library;
+  var inheritFrom = species.inheritFrom;
   var name = species.name;
-  var scriptPath = species.scriptPath;
-  var command = species.command;
-  var timeout = species.timeout;
-  var extension = species.extension;
-  var args = species.args;
-  var env = species.env;
+  var scriptPath;
+  var command;
+  var timeout;
+  var extension;
+  var args;
+  var env;
+  var father;
 
   if (typeof name === 'undefined') {
 
@@ -194,19 +197,32 @@ Brood.prototype.importType = function BroodImportType (species) {
   
   }
 
-  if (typeof command === 'undefined') {
+  if (typeof inheritFrom  === 'string') {
 
-    command = 'node'
-  
+    father = library[inheritFrom];
+    if (!!father) {
+
+      command = father.command;
+      extension = father.extension;
+      scriptPath = father.scriptPath;
+      timeout = father.timeout;
+      args = father.args;
+      env = underscore.clone(father.env);
+
+    }
+
   }
 
-  if (typeof extension === 'undefined') {
-
-    extension = 'js';
+  // Priority: species > father > global/default
   
-  }
+  command = species.command || command || 'node';
+  extension = species.extension || extension || 'js';
 
-  if (typeof scriptPath === 'undefined') {
+  if (typeof species.scriptPath === 'string') {
+
+    scriptPath = path.resolve(that.rootPath, species.scriptPath);
+
+  } else if (!scriptPath) {
 
     // If scriptPath is not given, than we calculate the default path by name
     // default_path = root/name(. => /).extension
@@ -215,35 +231,52 @@ Brood.prototype.importType = function BroodImportType (species) {
       that.rootPath,
       (name.replace('.', '/') + '.' + extension));
   
-  } else {
-
-    scriptPath = path.resolve(that.rootPath, scriptPath);
-  
   }
 
-  if (typeof timeout === 'undefined') {
+  timeout = timeout || that.timeout;
+  if (typeof species.timeout !== 'undefined') {
 
-    timeout = that.timeout;
-  
+    timeout = parseInt(species.timeout);
+    
+    if (!timeout) {
+
+      timeout = that.timeout;
+    
+    }
+
   }
+  
+  if (typeof species.args !== 'undefined') {
 
-  if (typeof args === 'undefined') {
+    if (underscore.isArray(species.args)) {
+
+      args = [scriptPath].concat(species.args);
+    
+    } else if (typeof species.args === 'string') {
+
+      args = [scriptPath, args];
+
+    } else {
+
+      throw new VError('Species has invalid args: %s', JSON.stringify(species));
+    
+    }
+
+  } else if (typeof args === 'undefined') {
 
     args = [scriptPath];
   
-  } else if (typeof args === 'string') {
-
-    args = [scriptPath, args];
-  
-  } else if (!underscore.isArray(args)) {
-
-    throw new VError('Species has invalid args: %s', JSON.stringify(species));
-  
-  }
+  } 
 
   if (typeof env === 'undefined') {
 
     env = {};
+  
+  }
+
+  if (typeof species.env !== 'undefined') {
+
+    underscore.extend(env, species.env);
   
   }
 

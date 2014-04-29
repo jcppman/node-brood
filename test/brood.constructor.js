@@ -79,6 +79,34 @@ describe('Brood constructor', function () {
     
     });
 
+    describe('inherit', function () {
+
+      var killer;
+      var father;
+
+      beforeEach(function () {
+
+        killer = this.brood.library['killer.zodiac'];
+        father = this.brood.library['killer.jackTheRipper'];
+      
+      });
+
+      it('should inherit properties from father', function () {
+
+        killer.env.weapon.should.equal('knife');
+        killer.command.should.equal('murder');
+
+      });
+
+      it('should override properties with his own', function () {
+
+        killer.args[1].should.equal('postAdOnNewspaper');
+        killer.env.area.should.equal('California');
+      
+      });
+
+    });
+
   });
 
 });

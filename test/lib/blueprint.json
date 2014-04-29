@@ -16,6 +16,23 @@
     },
     {
       "name": "silentBoy" 
+    },
+    {
+      "name": "killer.jackTheRipper",
+      "command": "murder", 
+      "extension": "js",
+      "env": {
+        "area": "London",
+        "weapon": "knife"
+      }
+    },
+    {
+      "name": "killer.zodiac",
+      "inheritFrom": "killer.jackTheRipper",
+      "args": ["postAdOnNewspaper"],
+      "env": {
+        "area": "California"  
+      }
     }
   ]
 }
