@@ -89,7 +89,7 @@ The example below contains every available field:
   "extension": "", // Optional, Default: js
   "args": [], // Optional
   "env": {}, // Optional
-  "inheritFrom": {}, //Optional
+  "aliasOf": "", //Optional
 }
 ```
 
@@ -100,13 +100,12 @@ the default scriptPath will be "yourHouse/myGhost".
 - ``args``: An array or a string
 - ``env``: An object, it will be merged with ``process.env`` and passed into
 spawned child.
-- ``inheritFrom``: A string, the father species.
+- ``aliasOf``: A string, the real species.
 
-### Inherit
-If ``inheritFrom`` is given, it will inherit every property from his father
-and merge it with given properties. Extension, command and scriptPath and args
-will be overriden, and env will be merged. __The father species should be 
-put above son species__.
+### Alias
+If ``aliasOf`` is given, it will copy properties from it and merge envs. 
+Only env will be merged, other properties on this species will be ignored.
+__The real species should be put above alias species__.
 
 E.g:
 ```
@@ -121,19 +120,16 @@ E.g:
 },
 {
   "name": "killer.zodiac",
-  "inheritFrom": "killer.jackTheRipper",
-  "args": ["postAdOnNewspaper"],
+  "aliasOf": "killer.jackTheRipper",
   "env": {
     "area": "California"  
   }
 }
 ```
 
-killer.zodiac will inherits command and extension from jackTheRipper, so the 
-calculated scriptPath will looks like: ``murder /xxx/iii/yyy/killer/zodiac.js``,
-also, env.weapon is inherited from jackTheRipper and env.area is overriden with
+killer.zodiac will has the same args, command and timeout with jackTheRipper,
+env.weapon is copied from jackTheRipper and env.area is overriden with
 'California'.
-
 
 ## Timeout
 When a larva receive a message from stdout, it will update the latestHeartBeat,

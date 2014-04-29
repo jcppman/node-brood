@@ -28,8 +28,7 @@
     },
     {
       "name": "killer.zodiac",
-      "inheritFrom": "killer.jackTheRipper",
-      "args": ["postAdOnNewspaper"],
+      "aliasOf": "killer.jackTheRipper",
       "env": {
         "area": "California"  
       }

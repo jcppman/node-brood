@@ -79,7 +79,7 @@ describe('Brood constructor', function () {
     
     });
 
-    describe('inherit', function () {
+    describe('aliasOf', function () {
 
       var killer;
       var father;
@@ -95,12 +95,12 @@ describe('Brood constructor', function () {
 
         killer.env.weapon.should.equal('knife');
         killer.command.should.equal('murder');
+        killer.args[0].should.equal(father.args[0]);
 
       });
 
       it('should override properties with his own', function () {
 
-        killer.args[1].should.equal('postAdOnNewspaper');
         killer.env.area.should.equal('California');
       
       });
