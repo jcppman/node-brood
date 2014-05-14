@@ -1,6 +1,6 @@
 {
   "name": "brood",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "private": false,
   "engines": {
     "node": "*",
@@ -24,7 +24,7 @@
     "url": "http://github.com/jcppman/node-brood.git"
   },
   "dependencies": {
-    "carrier": "~0.1.13",
+    "carrier": "~0.1.14",
     "underscore": "~1.6.0",
     "verror": "~1.4.0"
   },
