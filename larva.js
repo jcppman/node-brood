@@ -138,7 +138,7 @@ Larva.prototype.spawn = function larvaSpawn (addArgs) {
 
       carrier.carry(child.stderr, function onError (line) {
 
-        that.emit('error', line);
+        that.emit('stderr', line);
       
       });
 

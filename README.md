@@ -37,6 +37,11 @@ larva.on('info', function (msg) {
 larva.on('story', function (msg) {
   console.log('My child just told me a story: %s', msg);
 });
+
+// Stderr (the stderr are seperated from normal error event)
+larva.on('stderr', function (msg) {
+  console.log('A msg from stderr: ',msg);
+});
 ```
 
 ## Brood
