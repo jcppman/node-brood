@@ -88,6 +88,12 @@ Larva.prototype.spawn = function larvaSpawn (addArgs) {
       
       });
 
+      child.on('error', function (err) {
+
+        that.emit('error', err);
+      
+      });
+
       child.on('exit', function (code, signal) {
 
         if (code === 0) {
