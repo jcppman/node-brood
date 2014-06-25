@@ -158,7 +158,7 @@ Larva.prototype.spawn = function larvaSpawn (addArgs) {
 
 };
 
-Larva.prototype.die = function larvaDie () {
+Larva.prototype.die = function larvaDie (signal) {
   /*
    * Rest In Peace
    */
@@ -166,8 +166,10 @@ Larva.prototype.die = function larvaDie () {
   var that = this;
   var child = that.childProcess;
 
+  signal = signal || 'SIGKILL';
+
   process.nextTick(function () {
-    child.kill('SIGKILL');
+    child.kill(signal);
   });
 
   return that;
