@@ -106,7 +106,7 @@ Larva.prototype.spawn = function larvaSpawn (addArgs) {
         
         }
 
-        that.emit('exit', arguments);
+        that.emit('exit', code, signal);
       
       });
 
