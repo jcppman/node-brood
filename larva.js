@@ -149,6 +149,8 @@ Larva.prototype.spawn = function larvaSpawn (addArgs) {
       });
 
       that.childProcess = child;
+
+      that.emit('spawned');
     
     });
   
