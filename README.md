@@ -18,7 +18,10 @@ var brood = new Brood({
 });
 
 // Breed a new typeA larva
-var larva = brood.breed('typeA');
+var args = ['outputFilename', 'timeout']; // args that you want to pass to the 
+child while spawning
+
+var larva = brood.breed('typeA', args);
 
 // Now you could listen to events
 larva.on('error', function (err) {
@@ -165,7 +168,7 @@ otherwise, it will be emitted as an 'info' event:
 Brood doesn't provide a wrap of stdin rightnow, but you could still use the raw
 stdin stream:
 ```
-  larva.child.stdin.write("Say your prayers little one");
+  larva.childProcess.stdin.write("Say your prayers little one");
 ```
 
 ## Manage your library
